@@ -80,7 +80,7 @@ public class AgentAppointment {
     @Pattern(regexp = "[0]{1}[6,8,9]{1}[0-9]{8}")
     private String telNum;
 
-    @Pattern(regexp = "[A-Za-z0-9][A-Za-z0-9.]+@[a-z]+.[a-z.]+")
+    @Pattern(regexp = "[A-Za-z0-9][A-Za-z0-9.]{7}[A-Za-z0-9.]*@[a-z]+.[a-z.]+")
     private String email;
 
 }

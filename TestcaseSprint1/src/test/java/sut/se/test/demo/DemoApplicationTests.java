@@ -221,4 +221,111 @@ public class DemoApplicationTests {
 		}
 	}
 
+	@Test
+	public void testUserNameLengthOfEmailNotLessThan8() {
+		AgentAppointment a1 = new AgentAppointment();
+		a1.setfName("Fffff");
+		a1.setlName("Lllll");
+		a1.setAge(50);
+		a1.setTelNum("0801234567");
+		a1.setEmail("123bc@gmail.com");
+		try {
+			entityManager.persist(a1);
+			entityManager.flush();
+
+			fail("Should not pass to this line");
+		} catch(javax.validation.ConstraintViolationException e) {
+			Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
+			assertEquals(violations.isEmpty(), false);
+			assertEquals(violations.size(), 1);
+		}
+	}
+
+	@Test
+	public void testEmailMustHaveAddressSign() {
+		AgentAppointment a = new AgentAppointment();
+		a.setfName("Fffff");
+		a.setlName("Lllll");
+		a.setAge(50);
+		a.setTelNum("0801234567");
+		a.setEmail("12356abc-gmail.com");
+		try {
+			entityManager.persist(a);
+			entityManager.flush();
+
+			fail("Should not pass to this line");
+		} catch(javax.validation.ConstraintViolationException e) {
+			Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
+			assertEquals(violations.isEmpty(), false);
+			assertEquals(violations.size(), 1);
+		}
+	}
+
+	@Test
+	public void testEmailMustHaveAtSign() {
+		AgentAppointment a = new AgentAppointment();
+		a.setfName("Fffff");
+		a.setlName("Lllll");
+		a.setAge(50);
+		a.setTelNum("0801234567");
+		a.setEmail("12356abc-gmail.com");
+		try {
+			entityManager.persist(a);
+			entityManager.flush();
+
+			fail("Should not pass to this line");
+		} catch(javax.validation.ConstraintViolationException e) {
+			Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
+			assertEquals(violations.isEmpty(), false);
+			assertEquals(violations.size(), 1);
+		}
+	}
+
+	@Test
+	public void testDomainNameOfEmailMustBeOnlyLowercaseLetter() {
+		AgentAppointment a = new AgentAppointment();
+		a.setfName("Fffff");
+		a.setlName("Lllll");
+		a.setAge(50);
+		a.setTelNum("0801234567");
+		a.setEmail("12356abc@gMAil.com");
+		try {
+			entityManager.persist(a);
+			entityManager.flush();
+
+			fail("Should not pass to this line");
+		} catch(javax.validation.ConstraintViolationException e) {
+			Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
+			assertEquals(violations.isEmpty(), false);
+			assertEquals(violations.size(), 1);
+		}
+	}
+
+	@Test
+	public void testDomainNameOfEmailMustBeOnlyLowercaseLetterOrDot() {
+		AgentAppointment a1 = new AgentAppointment();
+		a1.setfName("Fffff");
+		a1.setlName("Lllll");
+		a1.setAge(50);
+		a1.setTelNum("0801234567");
+		a1.setEmail("123456abc@gMAil.com");
+
+		AgentAppointment a2 = new AgentAppointment();
+		a2.setfName("Fffff");
+		a2.setlName("Lllll");
+		a2.setAge(50);
+		a2.setTelNum("0801234567");
+		a2.setEmail("123456abc@gmail_com");
+		try {
+			entityManager.persist(a1);
+			entityManager.persist(a2);
+			entityManager.flush();
+
+			fail("Should not pass to this line");
+		} catch(javax.validation.ConstraintViolationException e) {
+			Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
+			assertEquals(violations.isEmpty(), false);
+			assertEquals(violations.size(), 1);
+		}
+	}
 }
